@@ -14,6 +14,9 @@ struct itens
     int numero_item;
 };
 
+//prototipo da funcao de busca de itens
+int busca_sequencial (struct itens mochila[], int quantidade_itens, char item_procurado[]);
+
 int main(){
 
     //criando nossa mochila com 10 itens
@@ -23,9 +26,11 @@ int main(){
 
     int opcao_menu; //variavel que armazena a opcao escolhida do menu
 
-    int item_procurado; //variavel para procurar o item para ser removido
+    int item_removido; //variavel para procurar o item para ser removido
 
     bool encontrado = false; //variavel para definir se o item foi encontrado ou nao
+
+    char item_procurado[max_str];
 
 
     //usando o do para exibir o menu varias vezes ate o usuario decidir sair
@@ -37,8 +42,9 @@ int main(){
 
         printf("1 - Adicionar item\n");
         printf("2 - Remover item\n");
-        printf("3 - Listar itens\n");
-        printf("4 - Sair\n");
+        printf("3 - Buscar item\n");
+        printf("4 - Listar itens\n");
+        printf("5 - Sair\n");
         printf("\n");
 
         printf("Digite uma opcao:\n");
@@ -48,6 +54,7 @@ int main(){
         {
         printf("Entrada invalida! Digite apenas numeros\n");
         printf("\n");
+
         while (getchar() != '\n'); //limpa o caractere do scanf
         continue;
         }
@@ -88,7 +95,7 @@ int main(){
         printf("\n");
 
         printf("Qual o numero do item que voce quer remover?\n");
-        if (scanf("%d", &item_procurado) != 1) //caso seja digitado algo diferente de numeros
+        if (scanf("%d", &item_removido) != 1) //caso seja digitado algo diferente de numeros
         {
         printf("Entrada invalida. Voltando ao menu.\n");
         break;
@@ -99,7 +106,7 @@ int main(){
 
         for (int i = 0; i < quantidade_itens; i++)
         {
-            if (mochila[i].numero_item == item_procurado)
+            if (mochila[i].numero_item == item_removido)
             {
                 mochila[i] = mochila[quantidade_itens - 1];
                 quantidade_itens--;
@@ -120,6 +127,30 @@ int main(){
         break;
 
     case 3:
+        printf("----------------Busca de Item----------------\n");
+        printf("\n");
+        printf("Digite o nome do item que voce deseja procurar:\n");
+        scanf("%s", item_procurado);
+        printf("\n");
+
+        int posicao = busca_sequencial(mochila, quantidade_itens, item_procurado);
+
+        if (posicao != -1) 
+        {
+            printf("Item encontrado!\n");
+            printf("Nome: %s\n", mochila[posicao].nome_item);
+            printf("Tipo: %s\n", mochila[posicao].tipo_item);
+            printf("Numero: %d\n", mochila[posicao].numero_item);
+            
+        } else {
+            printf("Item nao encontrado :(\n");
+        }
+                
+        printf("\n");
+
+        break; 
+
+    case 4:
         printf("----------------Lista dos seus itens:----------------");
         printf("\n");
 
@@ -140,7 +171,7 @@ int main(){
         
         break;
 
-    case 4:
+    case 5:
     
         printf("Saindo do programa...\n");
 
@@ -154,7 +185,7 @@ int main(){
     
     }
 
-    } while (opcao_menu != 4);
+    } while (opcao_menu != 5);
     
     return 0;
 }
