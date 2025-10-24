@@ -189,3 +189,12 @@ int main(){
     
     return 0;
 }
+
+int busca_sequencial(struct itens mochila[], int quantidade_itens, char item_procurado[]) {
+    for (int i = 0; i < quantidade_itens; i++) {
+        if (strcmp(mochila[i].nome_item, item_procurado) == 0) {
+            return i;
+        }
+    }
+    return -1;
+}
